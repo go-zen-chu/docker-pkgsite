@@ -12,10 +12,8 @@ RUN <<EOF
     go build -o pkgsite ./cmd/pkgsite/*.go
 EOF
 
-FROM gcr.io/distroless/static-debian11:latest
+FROM golang:1.21.3
 
 COPY --from=gobuilder /usr/local/src/repo/pkgsite /bin/pkgsite
 
-EXPOSE 8080
-
-CMD ["pkgsite", "-http", "0.0.0.0:8080"]
+ENTRYPOINT ["pkgsite"]
